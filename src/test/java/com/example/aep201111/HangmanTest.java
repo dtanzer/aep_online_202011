@@ -24,4 +24,17 @@ class HangmanTest {
 		assertThat(hangman.validateUserInput("ž")).isFalse();
 	}
 
+	@Test
+	void checkScoreTest() {
+		assertThat(hangman.getScore()).isZero();
+
+		hangman.validateUserInput(hangman.getRandomWord().substring(1));
+
+		assertThat(hangman.getScore()).isZero();
+
+		assertThat(hangman.validateUserInput("ž")).isFalse();
+
+		assertThat(hangman.getScore()).isEqualTo(1);
+	}
+
 }

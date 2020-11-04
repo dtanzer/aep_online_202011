@@ -3,11 +3,10 @@ package com.example.aep201111;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.util.StringUtils;
-
 public class Hangman
 {
     public static List<String> words = Arrays.asList("random", "word");
+    private Integer score = 0;
 
     public String getRandomWord()
     {
@@ -23,7 +22,13 @@ public class Hangman
         if(getRandomWord().contains(word)){
             return true;
         }
+
+        score++;
         return false;
     }
 
+    public Integer getScore()
+    {
+        return score;
+    }
 }
