@@ -1,15 +1,21 @@
 package com.example.aep201111;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
 
-import static org.assertj.core.api.Assertions.fail;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class HangmanTest {
+	@InjectMocks
+	private Hangman hangman = new Hangman();
 
 	@Test
-	void fixmeFindABetterName() {
-		fail("FIXME: Find a better name group 4!");
+	void pickRandomWordTest() {
+		List<String> words = hangman.getWords();
+
+		assertThat(hangman.getRandomWord()).isIn(words);
 	}
 
 }
