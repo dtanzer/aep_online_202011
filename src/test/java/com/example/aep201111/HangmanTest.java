@@ -1,17 +1,13 @@
 package com.example.aep201111;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 class HangmanTest {
 
-	@InjectMocks
-	private Hangman hangman;
-
+	private Hangman hangman = new Hangman();
 
 	@Test
 	void test_startGame()
@@ -25,6 +21,7 @@ class HangmanTest {
 		final String result = hangman.pickGameWord();
 
 		assertThat(result).isInstanceOf(String.class);
+		assertThat(result.length()).isGreaterThan(0);
 	}
 
 	@Test
