@@ -18,4 +18,10 @@ class HangmanTest {
 		assertThat(hangman.getRandomWord()).isIn(words);
 	}
 
+	@Test
+	void validateUserInput() {
+		assertThat(hangman.validateUserInput(hangman.getRandomWord().substring(1))).isTrue();
+		assertThat(hangman.validateUserInput("ž")).isFalse();
+	}
+
 }
