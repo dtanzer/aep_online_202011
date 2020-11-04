@@ -9,7 +9,7 @@ class HangmanTest {
 
 	@Test
 	void fixmeFindABetterName() {
-		fail("FIXME: Find a better name!");
+		fail("FIXME: Find a better name group 4!");
 	}
 
 }
