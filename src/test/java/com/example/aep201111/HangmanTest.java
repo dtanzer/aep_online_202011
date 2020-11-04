@@ -1,15 +1,16 @@
 package com.example.aep201111;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.assertj.core.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HangmanTest {
 
+	private Game game = new Game();
+
 	@Test
-	void fixmeFindABetterName() {
-		fail("FIXME: Find a better name!");
+	void isGameRunning()
+	{
+		assertTrue(game.isRunning());
 	}
 
 }
