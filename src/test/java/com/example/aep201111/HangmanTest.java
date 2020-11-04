@@ -1,5 +1,6 @@
 package com.example.aep201111;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -33,5 +34,12 @@ class HangmanTest
 
         assertTrue(game.isLost());
         assertFalse(game.isRunning());
+    }
+
+    @Disabled
+    @Test
+    void isGameNotLostAfterTenWrongGuessesAndStillRunning()
+    {
+
     }
 }
