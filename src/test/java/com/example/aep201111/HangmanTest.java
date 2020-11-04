@@ -1,9 +1,11 @@
 package com.example.aep201111;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.mockito.Mockito.when;
 
 class HangmanTest {
 
@@ -22,6 +24,14 @@ class HangmanTest {
 
 		assertThat(result).isInstanceOf(String.class);
 		assertThat(result.length()).isGreaterThan(0);
+	}
+
+	@Test
+	void test_currentStatusOfGameWord()
+	{
+		when(hangman.pickGameWord()).thenReturn("Dragan");
+		String currentStatusOfGameWord = hangman.guess("d");
+		assertThat(currentStatusOfGameWord).isEqualTo("d");
 	}
 
 	@Test
