@@ -5,11 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HangmanTest {
 
-	private Game game = new Game();
-
 	@Test
-	void isGameRunning()
+	void isGameRunningAtStart()
 	{
+		Game game = new Game();
 		assertTrue(game.isRunning());
 	}
 
