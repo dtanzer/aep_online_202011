@@ -10,9 +10,22 @@ public class Game {
     private GameStatus status;
 
     public enum GameStatus{
-        RUNNING,
+
+        RUNNING(0)
+                {
+                    @Override
+                    GameStatus addWrongGuess() {
+                       return RUNNING()
+                    }
+                },
         LOST,
-        WON
+        WON;
+        abstract GameStatus addWrongGuess();
+        private int guessCount;
+        GameStatus(int guessCount)
+        {
+            this.guessCount = guessCount;
+        }
     }
 
     public Game(final String secretWord) {
