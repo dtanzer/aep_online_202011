@@ -1,6 +1,7 @@
 package com.example.aep201111;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Game {
@@ -12,7 +13,7 @@ public class Game {
     }
 
     public boolean isRunning() {
-        return !isLost();
+        return !isLost() && !isWon();
     }
 
     public void guess(final String t) {
@@ -28,6 +29,6 @@ public class Game {
     }
 
     public boolean isWon() {
-        return false;
+        return Arrays.stream(secretWord.split("")).allMatch(this.guesses::contains);
     }
 }
