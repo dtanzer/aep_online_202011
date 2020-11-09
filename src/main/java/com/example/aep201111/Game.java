@@ -21,7 +21,7 @@ public class Game {
     }
 
     public boolean isRunning() {
-        return status == GameStatus.RUNNING;
+        return getGameStatus() == GameStatus.RUNNING;
     }
 
     public void guess(final String t) {
@@ -49,5 +49,10 @@ public class Game {
 
     public boolean isWon() {
         return Arrays.stream(secretWord.split("")).allMatch(guesses::contains);
+    }
+
+    public GameStatus getGameStatus()
+    {
+        return status;
     }
 }
