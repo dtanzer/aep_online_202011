@@ -12,7 +12,7 @@ class HangmanTest
     @Test
     void isGameRunningAtStart()
     {
-        final Game game = new Game();
+        final Game game = new Game("dummy");
         assertTrue(game.isRunning());
     }
 
@@ -32,6 +32,17 @@ class HangmanTest
     {
         final Game game = new Game("test");
         this.doNGuesses(game, 10);
+
+        assertFalse(game.isLost());
+        assertTrue(game.isRunning());
+    }
+
+    @Test
+    void isGameNotLostAfterOneCorrectAndTenWrongGuesses()
+    {
+        final Game game = new Game("test");
+        this.doNGuesses(game, 10);
+        game.guess("t");
 
         assertFalse(game.isLost());
         assertTrue(game.isRunning());

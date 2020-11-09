@@ -5,33 +5,29 @@ import java.util.List;
 
 public class Game
 {
-    private boolean lost = false;
-    private List<String> guesses;
-
-    public Game()
-    {
-        this.guesses = new ArrayList<>();
-    }
+    private List<String> guesses = new ArrayList<>();
+    private String secretWord;
 
     public Game(final String test)
     {
-        this();
+        this.secretWord=test;
     }
 
     public boolean isRunning()
     {
-        return !this.lost;
+        return !isLost();
     }
 
     public void guess(final String t)
     {
         this.guesses.add(t);
-
-        this.lost = true;
     }
 
+    private long getWrongGuesses(){
+        return this.guesses.stream().filter(guess->!secretWord.contains(guess)).count();
+    }
     public boolean isLost()
     {
-        return this.guesses.size() > 10;
+        return getWrongGuesses() > 10;
     }
 }
