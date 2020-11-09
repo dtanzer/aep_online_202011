@@ -59,6 +59,49 @@ class HangmanTest
         assertFalse(game.isRunning());
     }
 
+    @Test
+    void isGameWonAfterTenWrongAndAllCorrectGuesses()
+    {
+        final Game game = new Game("test");
+
+        doNGuesses(game, 10);
+        game.guess("t");
+        game.guess("e");
+        game.guess("s");
+
+        assertTrue(game.isWon());
+        assertFalse(game.isRunning());
+    }
+
+    @Test
+    void isGameLostAfterElevenWrongAndAllCorrectGuesses()
+    {
+        final Game game = new Game("test");
+
+        doNGuesses(game, 11);
+        game.guess("t");
+        game.guess("e");
+        game.guess("s");
+
+        assertFalse(game.isWon());
+        assertFalse(game.isRunning());
+    }
+
+    @Test
+    void isNotLostIfAlreadyWon()
+    {
+        final Game game = new Game("test");
+
+        game.guess("t");
+        game.guess("e");
+        game.guess("s");
+        doNGuesses(game, 11);
+
+        assertFalse(game.isLost());
+        assertTrue(game.isWon());
+        assertFalse(game.isRunning());
+    }
+
     private void doNGuesses(final Game game, final int n) {
         for (int i = 0; i < n; i++) {
             game.guess("x");

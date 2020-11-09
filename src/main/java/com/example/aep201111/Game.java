@@ -17,7 +17,10 @@ public class Game {
     }
 
     public void guess(final String t) {
-        this.guesses.add(t);
+        if (isRunning())
+        {
+            this.guesses.add(t);
+        }
     }
 
     private long getWrongGuessesCount() {
