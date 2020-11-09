@@ -4,61 +4,72 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Game {
+public class Game
+{
     private final List<String> guesses = new ArrayList<>();
+
     private final String secretWord;
+
     private GameStatus status;
 
-    public enum GameStatus{
+    public enum GameStatus
+    {
 
         RUNNING
                 {
                     @Override
-                    GameStatus addWrongGuess(int wrongGuessCount) {
-                       if(wrongGuessCount > 10) return LOST;
+                    GameStatus addWrongGuess(int wrongGuessCount)
+                    {
+                        if (wrongGuessCount > 10)
+                            return LOST;
 
-                       return RUNNING;
+                        return RUNNING;
                     }
-                },
-        LOST
+                }, LOST
+            {
+                @Override
+                GameStatus addWrongGuess(int wrongGuessCount)
                 {
-            @Override
-            GameStatus addWrongGuess(int wrongGuessCount) {
-              return LOST;
-            }
-        },
-        WON
+                    return LOST;
+                }
+            }, WON
+            {
+                @Override
+                GameStatus addWrongGuess(int wrongGuessCount)
                 {
-            @Override
-            GameStatus addWrongGuess(int wrongGuessCount) {
-              return WON;
-            }
-        };
+                    return WON;
+                }
+            };
+
         abstract GameStatus addWrongGuess(int wrongGuessCount);
     }
 
-    public Game(final String secretWord) {
+    public Game(final String secretWord)
+    {
         this.secretWord = secretWord;
         this.status = GameStatus.RUNNING;
     }
 
-    public void guess(final String t) {
+    public void guess(final String attempt)
+    {
         if (status == GameStatus.RUNNING)
         {
-            guesses.add(t);
-            if(getWrongGuessesCount() > 10)
+            guesses.add(attempt);
+            if (!secretWord.contains(attempt))
             {
-                status = GameStatus.LOST;
+                status = status.addWrongGuess(getWrongGuessesCount());
             }
-            else if(Arrays.stream(secretWord.split("")).allMatch(guesses::contains))
+
+            else if (Arrays.stream(secretWord.split("")).allMatch(guesses::contains))
             {
                 status = GameStatus.WON;
             }
         }
     }
 
-    private long getWrongGuessesCount() {
-        return guesses.stream().filter(guess -> !secretWord.contains(guess)).count();
+    private int getWrongGuessesCount()
+    {
+        return (int) guesses.stream().filter(guess -> !secretWord.contains(guess)).count();
     }
 
     public GameStatus getGameStatus()
