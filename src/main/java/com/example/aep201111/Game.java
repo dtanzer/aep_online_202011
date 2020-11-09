@@ -21,23 +21,21 @@ public class Game {
     }
 
     public boolean isRunning() {
-        return !isLost() && !isWon();
+        return status == GameStatus.RUNNING;
     }
 
     public void guess(final String t) {
-        if (isRunning())
+        if (status == GameStatus.RUNNING)
         {
             guesses.add(t);
-        }
-
-        if(isLost())
-        {
-            status = GameStatus.LOST;
-        }
-
-        else if(isWon())
-        {
-            status = GameStatus.WON;
+            if(isLost())
+            {
+                status = GameStatus.LOST;
+            }
+            else if(isWon())
+            {
+                status = GameStatus.WON;
+            }
         }
     }
 
