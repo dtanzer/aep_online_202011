@@ -48,6 +48,17 @@ class HangmanTest
         assertTrue(game.isRunning());
     }
 
+    @Test
+    void isGameWonAfterAllCorrectGuesses(){
+        final Game game = new Game("test");
+        game.guess("t");
+        game.guess("e");
+        game.guess("s");
+
+        assertTrue(game.isWon());
+        assertFalse(game.isRunning());
+    }
+
     private void doNGuesses(final Game game, final int n) {
         for (int i = 0; i < n; i++) {
             game.guess("x");
