@@ -9,7 +9,7 @@ public class Game {
     private final String secretWord;
     private GameStatus status;
 
-    enum GameStatus{
+    public enum GameStatus{
         RUNNING,
         LOST,
         WON
@@ -20,10 +20,6 @@ public class Game {
         this.status = GameStatus.RUNNING;
     }
 
-    public boolean isRunning() {
-        return getGameStatus() == GameStatus.RUNNING;
-    }
-
     public void guess(final String t) {
         if (status == GameStatus.RUNNING)
         {
@@ -32,7 +28,7 @@ public class Game {
             {
                 status = GameStatus.LOST;
             }
-            else if(isWon())
+            else if(Arrays.stream(secretWord.split("")).allMatch(guesses::contains))
             {
                 status = GameStatus.WON;
             }
@@ -41,14 +37,6 @@ public class Game {
 
     private long getWrongGuessesCount() {
         return guesses.stream().filter(guess -> !secretWord.contains(guess)).count();
-    }
-
-    public boolean isLost() {
-        return status == GameStatus.LOST;
-    }
-
-    public boolean isWon() {
-        return Arrays.stream(secretWord.split("")).allMatch(guesses::contains);
     }
 
     public GameStatus getGameStatus()

@@ -1,10 +1,8 @@
 package com.example.aep201111;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HangmanTest
 {
@@ -13,7 +11,7 @@ class HangmanTest
     void isGameRunningAtStart()
     {
         final Game game = new Game("dummy");
-        assertTrue(game.isRunning());
+        assertSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     @Test
@@ -22,8 +20,8 @@ class HangmanTest
         final Game game = new Game("test");
         this.doNGuesses(game, 11);
 
-        assertTrue(game.isLost());
-        assertFalse(game.isRunning());
+        assertSame(game.getGameStatus(), Game.GameStatus.LOST);
+        assertNotSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
 
@@ -33,8 +31,8 @@ class HangmanTest
         final Game game = new Game("test");
         this.doNGuesses(game, 10);
 
-        assertFalse(game.isLost());
-        assertTrue(game.isRunning());
+        assertNotSame(game.getGameStatus(), Game.GameStatus.LOST);
+        assertSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     @Test
@@ -44,8 +42,8 @@ class HangmanTest
         this.doNGuesses(game, 10);
         game.guess("t");
 
-        assertFalse(game.isLost());
-        assertTrue(game.isRunning());
+        assertNotSame(game.getGameStatus(), Game.GameStatus.LOST);
+        assertSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     @Test
@@ -55,8 +53,8 @@ class HangmanTest
         game.guess("e");
         game.guess("s");
 
-        assertTrue(game.isWon());
-        assertFalse(game.isRunning());
+        assertSame(game.getGameStatus(), Game.GameStatus.WON);
+        assertNotSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     @Test
@@ -69,8 +67,8 @@ class HangmanTest
         game.guess("e");
         game.guess("s");
 
-        assertTrue(game.isWon());
-        assertFalse(game.isRunning());
+        assertSame(game.getGameStatus(), Game.GameStatus.WON);
+        assertNotSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     @Test
@@ -83,8 +81,8 @@ class HangmanTest
         game.guess("e");
         game.guess("s");
 
-        assertFalse(game.isWon());
-        assertFalse(game.isRunning());
+        assertNotSame(game.getGameStatus(), Game.GameStatus.WON);
+        assertNotSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     @Test
@@ -97,9 +95,9 @@ class HangmanTest
         game.guess("s");
         doNGuesses(game, 11);
 
-        assertFalse(game.isLost());
-        assertTrue(game.isWon());
-        assertFalse(game.isRunning());
+        assertNotSame(game.getGameStatus(), Game.GameStatus.LOST);
+        assertSame(game.getGameStatus(), Game.GameStatus.WON);
+        assertNotSame(game.getGameStatus(), Game.GameStatus.RUNNING);
     }
 
     private void doNGuesses(final Game game, final int n) {
