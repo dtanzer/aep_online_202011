@@ -12,34 +12,34 @@ class HangmanTest
     @Test
     void isGameRunningAtStart()
     {
-        Game game = new Game();
+        final Game game = new Game();
         assertTrue(game.isRunning());
     }
 
     @Test
     void isGameLostAfterElevenWrongGuesses()
     {
-        Game game = new Game("test");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
-        game.guess("x");
+        final Game game = new Game("test");
+        this.doNGuesses(game, 11);
 
         assertTrue(game.isLost());
         assertFalse(game.isRunning());
     }
 
-    @Disabled
+
     @Test
     void isGameNotLostAfterTenWrongGuessesAndStillRunning()
     {
+        final Game game = new Game("test");
+        this.doNGuesses(game, 10);
 
+        assertFalse(game.isLost());
+        assertTrue(game.isRunning());
+    }
+
+    private void doNGuesses(final Game game, final int n) {
+        for (int i = 0; i < n; i++) {
+            game.guess("x");
+        }
     }
 }
