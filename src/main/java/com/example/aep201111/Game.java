@@ -7,9 +7,17 @@ import java.util.List;
 public class Game {
     private final List<String> guesses = new ArrayList<>();
     private final String secretWord;
+    private GameStatus status;
+
+    enum GameStatus{
+        RUNNING,
+        LOST,
+        WON
+    }
 
     public Game(final String secretWord) {
         this.secretWord = secretWord;
+        this.status = GameStatus.RUNNING;
     }
 
     public boolean isRunning() {
@@ -19,12 +27,22 @@ public class Game {
     public void guess(final String t) {
         if (isRunning())
         {
-            this.guesses.add(t);
+            guesses.add(t);
+        }
+
+        if(isLost())
+        {
+            status = GameStatus.LOST;
+        }
+
+        else if(isWon())
+        {
+            status = GameStatus.WON;
         }
     }
 
     private long getWrongGuessesCount() {
-        return this.guesses.stream().filter(guess -> !secretWord.contains(guess)).count();
+        return guesses.stream().filter(guess -> !secretWord.contains(guess)).count();
     }
 
     public boolean isLost() {
@@ -32,6 +50,6 @@ public class Game {
     }
 
     public boolean isWon() {
-        return Arrays.stream(secretWord.split("")).allMatch(this.guesses::contains);
+        return Arrays.stream(secretWord.split("")).allMatch(guesses::contains);
     }
 }
