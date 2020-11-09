@@ -28,7 +28,7 @@ public class Game {
         if (status == GameStatus.RUNNING)
         {
             guesses.add(t);
-            if(isLost())
+            if(getWrongGuessesCount() > 10)
             {
                 status = GameStatus.LOST;
             }
@@ -44,7 +44,7 @@ public class Game {
     }
 
     public boolean isLost() {
-        return getWrongGuessesCount() > 10;
+        return status == GameStatus.LOST;
     }
 
     public boolean isWon() {
