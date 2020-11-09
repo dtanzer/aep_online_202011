@@ -11,21 +11,30 @@ public class Game {
 
     public enum GameStatus{
 
-        RUNNING(0)
+        RUNNING
                 {
                     @Override
-                    GameStatus addWrongGuess() {
-                       return RUNNING()
+                    GameStatus addWrongGuess(int wrongGuessCount) {
+                       if(wrongGuessCount > 10) return LOST;
+
+                       return RUNNING;
                     }
                 },
-        LOST,
-        WON;
-        abstract GameStatus addWrongGuess();
-        private int guessCount;
-        GameStatus(int guessCount)
-        {
-            this.guessCount = guessCount;
-        }
+        LOST
+                {
+            @Override
+            GameStatus addWrongGuess(int wrongGuessCount) {
+              return LOST;
+            }
+        },
+        WON
+                {
+            @Override
+            GameStatus addWrongGuess(int wrongGuessCount) {
+              return WON;
+            }
+        };
+        abstract GameStatus addWrongGuess(int wrongGuessCount);
     }
 
     public Game(final String secretWord) {
