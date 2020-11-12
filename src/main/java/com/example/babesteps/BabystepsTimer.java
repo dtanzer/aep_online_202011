@@ -178,17 +178,15 @@ public class BabystepsTimer {
 
 				long remainingTimeInSeconds = SECONDS_IN_CYCLE - (elapsedTime / 1000);
 				String remainingTime = getRemainingTimeCaption(elapsedTime);
-//				!remainingTime.equals(lastRemainingTime)
 				if(remainingTimeInSeconds != lastRemainingTime) {
-//					remainingTime.equals("00:10")
 					if(remainingTimeInSeconds == 10) {
 						tenSecondsRemaining();
-					} else if(remainingTime.equals("00:00")) {
+					} else if(remainingTimeInSeconds == 0) {
 						timeIsUp();
 					}
 
 					updateUi(remainingTime);
-					lastRemainingTime = remainingTime;
+					lastRemainingTime = remainingTimeInSeconds;
 				}
 				try {
 					wallclock.nextTick();
