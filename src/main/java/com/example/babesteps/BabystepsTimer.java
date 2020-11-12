@@ -148,7 +148,7 @@ public class BabystepsTimer {
 
 	private static final class TimerThread extends Thread {
 
-		private String lastRemainingTime;
+		private long lastRemainingTime;
 		private boolean timerRunning;
 		private long currentCycleStartTime;
 
@@ -176,9 +176,12 @@ public class BabystepsTimer {
 					resetBackground();
 				}
 
+				long remainingTimeInSeconds = SECONDS_IN_CYCLE - (elapsedTime / 1000);
 				String remainingTime = getRemainingTimeCaption(elapsedTime);
-				if(!remainingTime.equals(lastRemainingTime)) {
-					if(remainingTime.equals("00:10")) {
+//				!remainingTime.equals(lastRemainingTime)
+				if(remainingTimeInSeconds != lastRemainingTime) {
+//					remainingTime.equals("00:10")
+					if(remainingTimeInSeconds == 10) {
 						tenSecondsRemaining();
 					} else if(remainingTime.equals("00:00")) {
 						timeIsUp();
