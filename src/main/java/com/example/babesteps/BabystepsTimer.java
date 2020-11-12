@@ -172,21 +172,19 @@ public class BabystepsTimer {
 					currentCycleStartTime = wallclock.currentTimeMillis();
 					elapsedTime = wallclock.currentTimeMillis() - currentCycleStartTime;
 				}
-				if(elapsedTime >= 5000 && elapsedTime < 6000 && !BACKGROUND_COLOR_NEUTRAL.equals(bodyBackgroundColor)) {
-					bodyBackgroundColor = BACKGROUND_COLOR_NEUTRAL;
+				if(elapsedTime >= 5000 && elapsedTime < 6000) {
+					resetBackground();
 				}
 
 				String remainingTime = getRemainingTimeCaption(elapsedTime);
 				if(!remainingTime.equals(lastRemainingTime)) {
 					if(remainingTime.equals("00:10")) {
-						playSound("2166__suburban-grilla__bowl-struck.wav");
+						tenSecondsRemaining();
 					} else if(remainingTime.equals("00:00")) {
-						playSound("32304__acclivity__shipsbell.wav");
-						bodyBackgroundColor=BACKGROUND_COLOR_FAILED;
+						timeIsUp();
 					}
 
-					timerPane.setText(createTimerHtml(remainingTime, bodyBackgroundColor, true));
-					timerFrame.repaint();
+					updateUi(remainingTime);
 					lastRemainingTime = remainingTime;
 				}
 				try {
@@ -195,6 +193,26 @@ public class BabystepsTimer {
 					//We don't really care about this one...
 				}
 			}
+		}
+
+		private void resetBackground() {
+			if (!BACKGROUND_COLOR_NEUTRAL.equals(bodyBackgroundColor)) {
+				bodyBackgroundColor = BACKGROUND_COLOR_NEUTRAL;
+			}
+		}
+
+		private void updateUi(final String remainingTime) {
+			timerPane.setText(createTimerHtml(remainingTime, bodyBackgroundColor, true));
+			timerFrame.repaint();
+		}
+
+		private void timeIsUp() {
+			playSound("32304__acclivity__shipsbell.wav");
+			bodyBackgroundColor=BACKGROUND_COLOR_FAILED;
+		}
+
+		private void tenSecondsRemaining() {
+			playSound("2166__suburban-grilla__bowl-struck.wav");
 		}
 	}
 }
