@@ -35,7 +35,6 @@ public class BabystepsTimer {
 	private static JFrame timerFrame;
     private static boolean timerRunning;
     private static long currentCycleStartTime;
-    private static String lastRemainingTime;
 	static JTextPane timerPane;
 	static WallClock wallclock = new SystemWallClock();
 
@@ -145,6 +144,8 @@ public class BabystepsTimer {
 	}
 
 	private static final class TimerThread extends Thread {
+
+		private static String lastRemainingTime;
 
 		@Override
 		public void run() {
