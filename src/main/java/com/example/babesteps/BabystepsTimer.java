@@ -30,14 +30,15 @@ public class BabystepsTimer {
 	static final String BACKGROUND_COLOR_FAILED = "#ffcccc";
 	static final String BACKGROUND_COLOR_PASSED = "#ccffcc";
 
-	private static final long SECONDS_IN_CYCLE = 120;
+	public static final long SECONDS_IN_CYCLE = 120;
 
 	private static JFrame timerFrame;
+    private static boolean timerRunning;
+    private static long currentCycleStartTime;
+    private static String lastRemainingTime;
 	static JTextPane timerPane;
 	static WallClock wallclock = new SystemWallClock();
-	private static boolean timerRunning;
-	private static long currentCycleStartTime;
-	private static String lastRemainingTime;
+
 	private static String bodyBackgroundColor = BACKGROUND_COLOR_NEUTRAL;
 
 	private static DecimalFormat twoDigitsFormat = new DecimalFormat("00");
@@ -81,6 +82,7 @@ public class BabystepsTimer {
 						timerFrame.setAlwaysOnTop(true);
 						timerPane.setText(createTimerHtml(getRemainingTimeCaption(0L), BACKGROUND_COLOR_NEUTRAL, true));
 						timerFrame.repaint();
+
 						new TimerThread().start();
 					} else if("command://stop".equals(e.getDescription())) {
 						timerRunning = false;
@@ -143,6 +145,7 @@ public class BabystepsTimer {
 	}
 
 	private static final class TimerThread extends Thread {
+
 		@Override
 		public void run() {
 			timerRunning = true;
