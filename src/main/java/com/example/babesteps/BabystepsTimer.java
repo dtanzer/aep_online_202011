@@ -153,8 +153,8 @@ public class BabystepsTimer {
 			}
 		}
 
-		public void updateUi(final String remainingTime) {
-			timerPane.setText(createTimerHtml(remainingTime, bodyBackgroundColor, true));
+		public void updateUi(final long elapsedTime) {
+			timerPane.setText(createTimerHtml(getRemainingTimeCaption(elapsedTime), bodyBackgroundColor, true));
 			timerFrame.repaint();
 		}
 
@@ -168,61 +168,4 @@ public class BabystepsTimer {
 		}
 	}
 
-	private static final class TimerThread extends Thread {
-
-		private long lastRemainingTime;
-		private boolean timerRunning;
-		private long currentCycleStartTime;
-
-		private UI ui;
-		public TimerThread(UI ui){
-			this.ui=ui;
-		}
-
-		private void stopTimer() {
-			timerRunning = false;
-		}
-
-		private void resetTimer() {
-			currentCycleStartTime = wallclock.currentTimeMillis();
-		}
-
-		@Override
-		public void run() {
-			timerRunning = true;
-			currentCycleStartTime = wallclock.currentTimeMillis();
-
-			while(timerRunning) {
-				long elapsedTime = wallclock.currentTimeMillis() - currentCycleStartTime;
-
-				if(elapsedTime >= SECONDS_IN_CYCLE*1000+980) {
-					currentCycleStartTime = wallclock.currentTimeMillis();
-					elapsedTime = wallclock.currentTimeMillis() - currentCycleStartTime;
-				}
-				if(elapsedTime >= 5000 && elapsedTime < 6000) {
-					ui.resetBackground();
-				}
-
-				long remainingTimeInSeconds = SECONDS_IN_CYCLE - (elapsedTime / 1000);
-				String remainingTime = getRemainingTimeCaption(elapsedTime);
-				if(remainingTimeInSeconds != lastRemainingTime) {
-					if(remainingTimeInSeconds == 10) {
-						ui.tenSecondsRemaining();
-					} else if(remainingTimeInSeconds == 0) {
-						ui.timeIsUp();
-					}
-
-					ui.updateUi(remainingTime);
-					lastRemainingTime = remainingTimeInSeconds;
-				}
-				try {
-					wallclock.nextTick();
-				} catch (InterruptedException e) {
-					//We don't really care about this one...
-				}
-			}
-		}
-
-
-	}
 }
