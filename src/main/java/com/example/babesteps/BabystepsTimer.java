@@ -82,7 +82,7 @@ public class BabystepsTimer {
 						timerPane.setText(createTimerHtml(getRemainingTimeCaption(0L), BACKGROUND_COLOR_NEUTRAL, true));
 						timerFrame.repaint();
 
-						timerThread = new TimerThread();
+						timerThread = new TimerThread(new UI());
 						timerThread.start();
 					} else if("command://stop".equals(e.getDescription())) {
 						timerThread.stopTimer();
@@ -146,11 +146,38 @@ public class BabystepsTimer {
 		}).start();
 	}
 
+	public static class UI {
+		public void resetBackground() {
+			if (!BACKGROUND_COLOR_NEUTRAL.equals(bodyBackgroundColor)) {
+				bodyBackgroundColor = BACKGROUND_COLOR_NEUTRAL;
+			}
+		}
+
+		public void updateUi(final String remainingTime) {
+			timerPane.setText(createTimerHtml(remainingTime, bodyBackgroundColor, true));
+			timerFrame.repaint();
+		}
+
+		public void timeIsUp() {
+			playSound("32304__acclivity__shipsbell.wav");
+			bodyBackgroundColor=BACKGROUND_COLOR_FAILED;
+		}
+
+		public void tenSecondsRemaining() {
+			playSound("2166__suburban-grilla__bowl-struck.wav");
+		}
+	}
+
 	private static final class TimerThread extends Thread {
 
 		private long lastRemainingTime;
 		private boolean timerRunning;
 		private long currentCycleStartTime;
+
+		private UI ui;
+		public TimerThread(UI ui){
+			this.ui=ui;
+		}
 
 		private void stopTimer() {
 			timerRunning = false;
@@ -173,19 +200,19 @@ public class BabystepsTimer {
 					elapsedTime = wallclock.currentTimeMillis() - currentCycleStartTime;
 				}
 				if(elapsedTime >= 5000 && elapsedTime < 6000) {
-					resetBackground();
+					ui.resetBackground();
 				}
 
 				long remainingTimeInSeconds = SECONDS_IN_CYCLE - (elapsedTime / 1000);
 				String remainingTime = getRemainingTimeCaption(elapsedTime);
 				if(remainingTimeInSeconds != lastRemainingTime) {
 					if(remainingTimeInSeconds == 10) {
-						tenSecondsRemaining();
+						ui.tenSecondsRemaining();
 					} else if(remainingTimeInSeconds == 0) {
-						timeIsUp();
+						ui.timeIsUp();
 					}
 
-					updateUi(remainingTime);
+					ui.updateUi(remainingTime);
 					lastRemainingTime = remainingTimeInSeconds;
 				}
 				try {
@@ -196,24 +223,6 @@ public class BabystepsTimer {
 			}
 		}
 
-		private void resetBackground() {
-			if (!BACKGROUND_COLOR_NEUTRAL.equals(bodyBackgroundColor)) {
-				bodyBackgroundColor = BACKGROUND_COLOR_NEUTRAL;
-			}
-		}
 
-		private void updateUi(final String remainingTime) {
-			timerPane.setText(createTimerHtml(remainingTime, bodyBackgroundColor, true));
-			timerFrame.repaint();
-		}
-
-		private void timeIsUp() {
-			playSound("32304__acclivity__shipsbell.wav");
-			bodyBackgroundColor=BACKGROUND_COLOR_FAILED;
-		}
-
-		private void tenSecondsRemaining() {
-			playSound("2166__suburban-grilla__bowl-struck.wav");
-		}
 	}
 }
