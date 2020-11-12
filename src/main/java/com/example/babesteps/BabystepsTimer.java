@@ -32,6 +32,7 @@ public class BabystepsTimer {
 
 	public static final long SECONDS_IN_CYCLE = 120;
 
+	private static TimerThread timerThread;
 	private static JFrame timerFrame;
     private static boolean timerRunning;
     private static long currentCycleStartTime;
@@ -82,7 +83,8 @@ public class BabystepsTimer {
 						timerPane.setText(createTimerHtml(getRemainingTimeCaption(0L), BACKGROUND_COLOR_NEUTRAL, true));
 						timerFrame.repaint();
 
-						new TimerThread().start();
+						timerThread = new TimerThread();
+						timerThread.start();
 					} else if("command://stop".equals(e.getDescription())) {
 						timerRunning = false;
 						timerFrame.setAlwaysOnTop(false);
