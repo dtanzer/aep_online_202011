@@ -14,10 +14,22 @@ public class Wizz implements Validator
 
     private String primeNumber(int key)
     {
-        if (key == 2)
+        boolean flag = false;
+
+        for (int i = 2; i <= key / 2; ++i)
+        {
+            if (key % i == 0)
+            {
+                flag = true;
+                break;
+            }
+
+        }
+        if (!flag)
         {
             return "Wizz";
         }
+
         return "";
     }
 }
