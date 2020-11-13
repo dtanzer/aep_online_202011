@@ -17,6 +17,10 @@ public class Wizz implements Validator
     private String primeNumber(int key)
     {
         boolean flag = false;
+        if (key == 1)
+        {
+            flag = true;
+        }
 
         for (int i = 2; i <= key / 2; ++i)
         {
@@ -32,6 +36,6 @@ public class Wizz implements Validator
             return "Wizz";
         }
 
-        return "";
+        return Integer.toString(key);
     }
 }
