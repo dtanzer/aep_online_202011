@@ -17,7 +17,7 @@ import com.example.evilfizzbuzz.Buzz;
 public class BuzzTest {
 	@Test
 	public void test(){
-		Map<Integer,String> dummy = new HashMap<>(){
+		Map<Integer,String> dummy = new HashMap<Integer,String>(){
 			{
 				put(1, "");
 				put(3, "");
