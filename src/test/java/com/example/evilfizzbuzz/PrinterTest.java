@@ -21,6 +21,6 @@ public class PrinterTest
 
         Printer printer = new Printer();
         String output = printer.printMap(myMap);
-        assertEquals("1, Wizz, FizzWizz, 4, BuzzWizz, ", output);
+        assertEquals("1, Wizz, FizzWizz, 4, BuzzWizz", output);
     }
 }
