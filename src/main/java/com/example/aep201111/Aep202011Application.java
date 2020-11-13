@@ -1,6 +1,8 @@
 package com.example.aep201111;
 
+import com.example.evilfizzbuzz.Buzz;
 import com.example.evilfizzbuzz.EvilFizzBuzz;
+import com.example.evilfizzbuzz.fizz.Fizz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,8 +16,8 @@ public class Aep202011Application {
 
 		EvilFizzBuzz evilFizzBuzz = new EvilFizzBuzz();
 		Map<Integer, String> numbersMap = evilFizzBuzz.generateNumbers(1, 100);
-//		evilFizzBuzz.addValidator();
-//		evilFizzBuzz.addValidator();
+		evilFizzBuzz.addValidator(new Fizz());
+		evilFizzBuzz.addValidator(new Buzz());
 //		evilFizzBuzz.addValidator();
 //		evilFizzBuzz.addValidator();
 
