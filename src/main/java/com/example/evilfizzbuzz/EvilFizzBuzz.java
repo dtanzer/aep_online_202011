@@ -1,5 +1,7 @@
 package com.example.evilfizzbuzz;
 
+import com.example.evilfizzbuzz.fizz.Fizz;
+
 public class EvilFizzBuzz {
 
     public EvilFizzBuzz() {
@@ -7,6 +9,8 @@ public class EvilFizzBuzz {
         // generate numbers
 
         // add fizz
+        Validator fizz = new Fizz();
+        fizz.update(null);
 
         // add buzz
 
