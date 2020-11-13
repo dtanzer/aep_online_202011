@@ -17,11 +17,11 @@ class WizzTest
         Map<Integer, String> map = new HashMap<>();
         map.put(2, "");
         map.put(4, "");
-        map.put(3, "");
+        map.put(3, "Fizz");
 
         wizz.update(map);
 
         assertTrue(map.get(2).equals("Wizz"));
-        assertTrue(map.get(3).equals("Wizz"));
+        assertTrue(map.get(3).equals("FizzWizz"));
     }
 }
