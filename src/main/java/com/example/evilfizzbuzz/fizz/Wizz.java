@@ -9,6 +9,15 @@ public class Wizz implements Validator
     @Override
     public void update(final Map<Integer, String> numbers)
     {
+        numbers.entrySet().forEach(e -> e.setValue(primeNumber(e.getKey())));
+    }
 
+    private String primeNumber(int key)
+    {
+        if (key == 2)
+        {
+            return "Wizz";
+        }
+        return "";
     }
 }
