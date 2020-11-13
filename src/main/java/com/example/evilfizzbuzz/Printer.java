@@ -9,8 +9,11 @@ public class Printer
     public String printMap(Map <Integer, String> myMap)
     {
         String output = "";
+
+        int counter = 0;
         for (Map.Entry<Integer,String> entry : myMap.entrySet())
         {
+            counter++;
             if (StringUtils.isEmpty(entry.getValue()))
             {
                 output = output.concat(entry.getKey().toString());
@@ -19,7 +22,10 @@ public class Printer
             {
                 output = output.concat(entry.getValue());
             }
-            output = output.concat(", ");
+            if (counter < myMap.size())
+            {
+                output = output.concat(", ");
+            }
         }
         System.out.println(output);
         return output;
