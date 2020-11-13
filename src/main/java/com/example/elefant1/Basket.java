@@ -6,9 +6,27 @@ public class Basket {
 	double basePrice=35.2;
 	String country="AT";
 
+
+
+
+	private static class CalculationResult{
+		double netPrice;
+
+		@Override
+		public String toString() {
+			return "CalculationResult{" + "netPrice=" + netPrice + '}';
+		}
+	}
+
+	public CalculationResult calculate(){
+		CalculationResult res = new CalculationResult();
+		res.netPrice=items*basePrice;
+		return res;
+	}
+
 	@Override
 	public String toString() {
-		return "Basket{" + "items=" + items + ", basePrice=" + basePrice + ", country='" + country + '\'' + '}';
+		return "Basket{" + "items=" + items + ", basePrice=" + basePrice + ", country='" + country + '}' +'\n' + calculate();
 	}
 
 	public static void main(String[] args) {
